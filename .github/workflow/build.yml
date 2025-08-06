@@ -1,0 +1,41 @@
+name: Build 
+
+on: 
+  pull_request: 
+    branches:
+      - dev
+      - stage
+      - main
+
+jobs: 
+  build-website: 
+    runs-on: ubuntu-latest
+    steps: 
+      - name: checkout 
+        uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with: 
+          node-version-file: 'codebase/rdicidr-0.1.0/.nvmrc'
+      
+      - name: Install Dependencies
+        run: | 
+           npm i
+
+      - name: Linting
+        run: | 
+           npm run lint
+
+      - name: Prettier
+        run: | 
+           npm run prettier
+
+      - name: Tests
+        run: | 
+           CI=true npm run test
+
+      - name: build
+        run: | 
+           npm run build
+
+      
