@@ -25,3 +25,7 @@ yarn-error.log*
 .terraform
 *.tfstate.*
 .terraform*
+
+node_modules
+build
+
