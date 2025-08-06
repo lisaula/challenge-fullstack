@@ -19,22 +19,27 @@ jobs:
           node-version-file: 'codebase/rdicidr-0.1.0/.nvmrc'
       
       - name: Install Dependencies
+        working-directory: ./codebase/rdicidr-0.1.0
         run: | 
            npm i
 
       - name: Linting
+        working-directory: ./codebase/rdicidr-0.1.0
         run: | 
            npm run lint
 
       - name: Prettier
+        working-directory: ./codebase/rdicidr-0.1.0
         run: | 
            npm run prettier
 
       - name: Tests
+        working-directory: ./codebase/rdicidr-0.1.0
         run: | 
            CI=true npm run test
 
       - name: build
+        working-directory: ./codebase/rdicidr-0.1.0
         run: | 
            npm run build
 
