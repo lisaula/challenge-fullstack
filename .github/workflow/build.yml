@@ -1,11 +1,13 @@
 name: Build 
 
-on: 
-  pull_request: 
+on:
+  pull_request:
+    types:
+      - opened
     branches:
       - dev
-      - stage
       - main
+      - stage
 
 jobs: 
   build-website: 
