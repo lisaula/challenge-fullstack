@@ -1,0 +1,23 @@
+name: stage-rule
+
+on:
+  pull_request:
+    branches:
+      - stage
+
+jobs: 
+    check-pr-source: 
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Display github
+              env: 
+                GIHUB_CONTEXT: ${{toJson(github)}}
+              run: |
+                echo $GIHUB_CONTEXT
+
+            - name: check pr source
+              if: ${{github.head_ref != 'dev'}}
+              run: | 
+                echo "Erro: you can only make a PR from dev branch"
+                exit 1 
+            
