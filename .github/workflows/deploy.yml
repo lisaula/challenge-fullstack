@@ -1,0 +1,33 @@
+name: Build 
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+      - stage
+
+jobs: 
+  deploy-website:
+    runs-on: ubuntu-latest
+    steps: 
+        - uses: dawidd6/action-download-artifact@v11
+          with:
+            workflow: workflow_name.yml
+            workflow_conclusion: success
+            branch: ${{github.base_ref}}
+            name: build
+            path: downloaded-artifact
+
+
+        - uses: jakejarvis/s3-sync-action@master
+          with:
+            args: --follow-symlinks --delete
+          env:
+            AWS_S3_BUCKET: "${{ github.ref_name }}-challenge-test"
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: 'us-east-1'   # optional: defaults to us-east-1
+            SOURCE_DIR: 'downloaded-artifact/'
+
+
